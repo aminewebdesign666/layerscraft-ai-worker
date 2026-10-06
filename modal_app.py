@@ -29,7 +29,6 @@ image = (
 
 @app.cls(
     image=image,
-    gpu="T4",
     scaledown_window=60,
     timeout=600,
 )
@@ -39,7 +38,7 @@ class LayersCraftSAM:
         import torch
         from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
 
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        device = "cpu"
         sam = sam_model_registry["vit_b"](checkpoint=MODEL_PATH)
         sam.to(device=device)
 
