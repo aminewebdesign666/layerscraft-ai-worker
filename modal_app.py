@@ -44,11 +44,11 @@ class LayersCraftSAM:
 
         self.generator = SamAutomaticMaskGenerator(
             sam,
-            points_per_side=24,
+            points_per_side=12,
             pred_iou_thresh=0.88,
             stability_score_thresh=0.92,
-            crop_n_layers=1,
-            min_mask_region_area=900,
+            crop_n_layers=0,
+            min_mask_region_area=600,
         )
 
     @modal.method()
@@ -124,10 +124,10 @@ class LayersCraftSAM:
             )
 
         return {
-            "version": "0.2.0",
+            "version": "0.2.1-cpu",
             "width": width,
             "height": height,
-            "model": "sam-vit-b",
+            "model": "sam-vit-b-cpu-preview",
             "layers": layers,
         }
 
@@ -149,4 +149,4 @@ def segment(payload: dict):
 @app.function(image=image)
 @modal.fastapi_endpoint(method="GET")
 def health():
-    return {"ok": True, "service": "layerscraft-ai-worker", "version": "0.2.0"}
+    return {"ok": True, "service": "layerscraft-ai-worker", "version": "0.2.1-cpu"}
